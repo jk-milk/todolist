@@ -1,0 +1,13 @@
+.text-box {
+  margin: 10px;
+}
+
+input {
+  width: 30%;
+  height: fit-content;
+}
+
+.main {
+  margin: 0 auto;
+  text-align: center;
+}
