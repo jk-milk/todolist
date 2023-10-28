@@ -2,11 +2,28 @@ import "./Main.css";
 import Button from 'react-bootstrap/Button';
 import Header from "../components/Header";
 import TextBoxAppendButton from "../components/TextBoxAppendButton";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 
-const Main = (props) => {
-  const [todos, setTodos] = useState(props.data);
+function Main() {
+  const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    setTodos([
+      {
+        id : 0,
+        body: "1"
+      },
+      {
+        id : 1,
+        body: "2"
+      },
+      {
+        id : 2,
+        body: "3"
+      }
+    ]);
+  }, [])
 
   const handleOnchange = (e) => {
     // console.log(e.target.name);
@@ -18,10 +35,17 @@ const Main = (props) => {
     setTodos(newTodos);
   }
 
+  const isTodoNull = useRef(false);
+  const changeIsTodoNull = (bool) => {
+    isTodoNull.current = bool;
+  }
+
   const deleteBox = (id) => {
     // console.log(id);
+    // console.log(isTodoNull.current);
     const newTodos = todos.filter(x => x.id !== id);
     // console.log(newTodos);
+    if (newTodos.length === 0) isTodoNull.current = true;
     setTodos(newTodos);
   }
 
@@ -38,7 +62,7 @@ const Main = (props) => {
           )
         )}
       </div>
-      <TextBoxAppendButton todos={todos} setTodos={setTodos}/>
+      <TextBoxAppendButton todos={todos} setTodos={setTodos} isTodoNull={isTodoNull} changeIsTodoNull={changeIsTodoNull} />
     </div>
   );
 }
